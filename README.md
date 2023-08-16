@@ -1,6 +1,8 @@
 
 ### 1. 지원자 이름 : 이홍열
+
 <br></br>
+
 ### 2. 애플리케이션의 실행 방법(엔드포인트 호출 방법)
  - 사용한 기술 스택 : Javascript/Express
  - git clone 후 추가적으로 .env를 생성하여 `.envsample`에 맞도록 환경변수를 셋팅합니다.
@@ -43,6 +45,7 @@
    - 테이블 구조 이미지는 아래 이미지를 통하여 확인해 주세요.
         
    <img width="672" alt="스크린샷 2023-08-16 오후 11 24 39" src="https://github.com/hongyeollee/wanted-pre-onboardung-backend/assets/108148069/a32aa2d6-7513-44f5-ab4f-5717643263db">
+   
 
 ### 4. 구현한 API의 동작을 촬영한 데모 영상 링크
    🔗[데모영상 링크 바로가기](https://youtu.be/b442XkgaNoE)
@@ -52,13 +55,16 @@
    <img width="365" alt="스크린샷 2023-08-17 오전 12 03 37" src="https://github.com/hongyeollee/wanted-pre-onboardung-backend/assets/108148069/324e49d2-4d8f-41d7-855b-41f67d43b225">
     
    - 레이어드 아키텍쳐 구분
-     app.js : express로 서버가 수행되기 전에 셋팅이 될 수 있도록 하였습니다.
-     server.js : app.js가 실제로 서버를 작동시킬 때에 DB와 접근이 가능하도록 하였습니다. app.js와 server.js를 구분한 이유는 test를 수행할 때에 server.js 없이 수행이 가능하여 구분해 놓았습니다.
-     router: api 수행 시 특정 api(게시물의 생성, 수정, 삭제)에서 로그인한 유저만 기능을 수행할 수 있도록 미들웨어로 수행하였습니다.
-     controller, service, model 의 구조로 구분하였습니다.
+     - app.js : express로 서버가 수행되기 전에 셋팅이 될 수 있도록 하였습니다.
+     - server.js : app.js가 실제로 서버를 작동시킬 때에 DB와 접근이 가능하도록 하였습니다. app.js와 server.js를 구분한 이유는 test를 수행할 때에 server.js 없이 수행이 가능하여 구분해 놓았습니다.
+     - router: api 수행 시 특정 api(게시물의 생성, 수정, 삭제)에서 로그인한 유저만 기능을 수행할 수 있도록 미들웨어로 수행하였습니다.
      - controller : ErrorHandler, 클라이언트의 요청과 반환에 집중할 수 있도록 하였습니다.
      - service : API에서 비즈니스 로직에 대해서 집중 할 수 있도록 하였습니다. (ex. bcrypt를 활용한 비밀번호의 암호화, JWT를 활용한 인증/인가 등)
      - model : 클라이언트 요청에서 DB를 활용하는 경우에 대해서 typeorm의 연결을 활용하고 query를 호출하여 DB를 활용한 CRUD의 일련을 활동들을 연결하는데 집중할 수 있도록 했습니다.
+     - uitil : 각 api에서 필요로 하는 기능 일부(유효성검사, 에러핸들러) 기능에 대해 기능에 대해서 util로 구분하였습니다.
+     - middleware : 인증/인가에 대해서 auth를 통하여 중간에 필요로 하는 미들웨어에 대해서 활용하여 기능할 수 있도록 구분하였습니다.
+    
+   
 ### 6. API 명세
    🔗[api문서(postman) 바로가기](https://www.postman.com/econrich/workspace/econrich-assignment/collection/27867478-6bca71f9-a660-4b6d-a28e-bb5e331f5000?action=share&creator=27867478)
     
