@@ -1,3 +1,83 @@
+
+### 1. 지원자 이름 : 이홍열
+<br></br>
+### 2. 애플리케이션의 실행 방법(엔드포인트 호출 방법)
+ - 사용한 기술 스택 : Javascript/Express
+ - git clone 후 추가적으로 .env를 생성하여 `.envsample`에 맞도록 환경변수를 셋팅합니다.
+ - DB/mygration을 참고하여 mysql에 마이그레이션을 진행합니다. 선호하는 방식으로 mysql의 database를 생성합니다.(저는 dbmate를 활용하여 마이그레이션을 진행했습니다.)
+ - 엔드포인트의 호출방법
+   - l. 회원가입
+        - HTTP method : POST
+        - 엔드포인트 : /users/signup
+        - 호출방법 : req.body로 email, password, name을 입력하여 회원가입을 통해 user의 정보가 DB에 저장됩니다. 회원가입에 성공하면 `회원가입에 성공하였습니다`라는 메시지를 반환합니다.
+        - 과제 API 요구사항에 맞추어 email 입력시에 @가 포함하고 password에는 8자 이상을 입력해야 회원가입이 될 수 있도록 정규표현식을 사용하였습니다.
+     ll. 로그인
+        - HTTP method : POST
+        - 엔드포인트 : /users/login
+        - 호출방법 : req.body로 email과 password를 입력합니다. 로그인을 시도할때 없는이메일을 등록하게되면 `존재하지 않는 email입니다.`를 반환합니다. 잘못된 비밀번호를 입력하게 되면`유효하지 않은 비밀번호 형식입니다. 비밀번호는 8자 이상 입니다.`를 반환합니다. 로그인을 정상적으로 실행하게되면 JWT토큰을 반환합니다. 인증/인가를 통해서 특정 게시물의 생성,수정,삭제의 기능을 할 수 있습니다. 토큰의 유효시간은 1시간으로 설정되어 있습니다.
+     lll. 게시물 생성
+        - HTTP method : POST
+        - 엔드포인트 : /posts
+        - 호출방법 : 게시물 생성은 로그인한 유저가 정상적으로 인가되었을때 기능을 수행할 수 있습니다. req.body로 title과 description을 입력합니다. title 또는 description을 입력하지 않으면 `제목, 내용을 입력해주세요.`를 반환합니다. 정상적으로 글을 생성하게되면 `게시글이 등록되었습니다.`라는 메시지를 반환합니다.
+     lV. 게시물 전체조회
+        - HTTP mehtod : GET
+        - 엔드포인트 : /posts
+        - 호출방법 : 게시물 전체조회는 엔드포인트에서 pagination을 구성하여 req.query를 통해 값을 반환합니다. 반환할때는 페이지네이션에서 설정한 값에 적절하게 게시물에 대한 정보 전체를 반환합니다.
+     V. 특정 게시물 조회
+        - HTTP method : GET
+        - 엔드포인트 : /posts/postId
+        - 호출방법 : 특정 게시물의 조회는 엔드포인트에서 해당되는 게시물의 Id를 req.params를 통하여 특정 게시물을 조회할 수 있습니다. 등록되어있지 않은 게시물을 조회하게되면 `존재하지 않는 게시글입니다.`를 반환합니다.
+     Vl. 특정 게시물 수정
+        - HTTP mehtod : PATCH
+        - 엔드포인트 : /posts/postId
+        - 호출방법 : 게시물 생성은 로그인한 유저가 정상적으로 인가되었을때 기능을 수행할 수 있습니다. 특정 게시물의 수정은 엔드포인트에서 해당되는 게시물의 Id를 req.params를 통하여 특정 게시물을 수정할 수 있습니다. 등록되어있지 않은 게시물을 조회하게되면 `존재하지 않는 게시글입니다.`를 반환합니다. req.body에 수정하고자 하는 title, description을 입력하면 `게시글이 수정되었습니다.`를 반환합니다.
+     Vll. 특정 게시물 삭제
+        - HTTP mehtod : DELETE
+        - 엔드포인트 : posts/postId
+        - 호출방법 : 게시물 생성은 로그인한 유저가 정상적으로 인가되었을때 기능을 수행할 수 있습니다. 특정 게시물의 수정은 엔드포인트에서 해당되는 게시물의 Id를 req.params를 통하여 특정 게시물을 삭제할 수 있습니다. 등록되어있지 않은 게시물을 조회하게되면 `존재하지 않는 게시글입니다.`를 반환합니다.
+          
+### 3. 데이터베이스 테이블 구조
+        - 데이터베이스의 테이블은 `users`, `posts`두개의 테이블로 구성하였습니다.
+        - users와 posts의 관계에서는 유저와 게시물이 1:N 관계로 설계하였습니다.
+        - 테이블 구조 이미지는 아래 이미지를 통하여 확인해 주세요.
+   <img width="672" alt="스크린샷 2023-08-16 오후 11 24 39" src="https://github.com/hongyeollee/wanted-pre-onboardung-backend/assets/108148069/a32aa2d6-7513-44f5-ab4f-5717643263db">
+
+### 4. 구현한 API의 동작을 촬영한 데모 영상 링크
+       🔗[데모영상 링크 바로가기](https://youtu.be/b442XkgaNoE)
+
+
+### 5. 구현 방법 및 이유에 대한 간략한 설명
+    <img width="365" alt="스크린샷 2023-08-17 오전 12 03 37" src="https://github.com/hongyeollee/wanted-pre-onboardung-backend/assets/108148069/324e49d2-4d8f-41d7-855b-41f67d43b225">
+    - 레이어드 아키텍쳐 구분
+        app.js : express로 서버가 수행되기 전에 셋팅이 될 수 있도록 하였습니다.
+        server.js : app.js가 실제로 서버를 작동시킬 때에 DB와 접근이 가능하도록 하였습니다. app.js와 server.js를 구분한 이유는 test를 수행할 때에 server.js 없이 수행이 가능하여 구분해 놓았습니다.
+        router: api 수행 시 특정 api(게시물의 생성, 수정, 삭제)에서 로그인한 유저만 기능을 수행할 수 있도록 미들웨어로 수행하였습니다.
+        controller, service, model 의 구조로 구분하였습니다.
+        - controller : ErrorHandler, 클라이언트의 요청과 반환에 집중할 수 있도록 하였습니다.
+        - service : API에서 비즈니스 로직에 대해서 집중 할 수 있도록 하였습니다. (ex. bcrypt를 활용한 비밀번호의 암호화, JWT를 활용한 인증/인가 등)
+        - model : 클라이언트 요청에서 DB를 활용하는 경우에 대해서 typeorm의 연결을 활용하고 query를 호출하여 DB를 활용한 CRUD의 일련을 활동들을 연결하는데 집중할 수 있도록 했습니다.
+### 6. API 명세
+        🔗[api문서(postman) 바로가기](https://www.postman.com/econrich/workspace/econrich-assignment/collection/27867478-6bca71f9-a660-4b6d-a28e-bb5e331f5000?action=share&creator=27867478)
+    
+        
+
+
+
+✅ 과제 제출 체크리스트
+- [x] 본인 Github 레포지토리 public upload (필수)
+- [x] 레포지토리 이름 `wanted-pre-onboarding-backend` 지정 (필수)
+- [x] README.md 파일 포함내용 (필수)
+- [x] API 요구사항에 맞추어 API 생성 (필수)
+- [ ] 통합테스트 (가산)
+- [ ] 단위테스트 (가산)
+- [ ] docker compose (가산)
+- [ ] 클라우드 환경(AWS, GCP) (가산)
+
+
+<br></br>
+<br></br>
+<br></br>
+
 # 원티드 프리온보딩 백엔드 인턴십 - 선발 과제
 <br></br>
 ## 1. 과제 안내
