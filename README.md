@@ -55,6 +55,7 @@
    <img width="365" alt="스크린샷 2023-08-17 오전 12 03 37" src="https://github.com/hongyeollee/wanted-pre-onboardung-backend/assets/108148069/324e49d2-4d8f-41d7-855b-41f67d43b225">
     
    - 레이어드 아키텍쳐 구분
+     
      - app.js : express로 서버가 수행되기 전에 셋팅이 될 수 있도록 하였습니다.
      - server.js : app.js가 실제로 서버를 작동시킬 때에 DB와 접근이 가능하도록 하였습니다. app.js와 server.js를 구분한 이유는 test를 수행할 때에 server.js 없이 수행이 가능하여 구분해 놓았습니다.
      - router: api 수행 시 특정 api(게시물의 생성, 수정, 삭제)에서 로그인한 유저만 기능을 수행할 수 있도록 미들웨어로 수행하였습니다.
