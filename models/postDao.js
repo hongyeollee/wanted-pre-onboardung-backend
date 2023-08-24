@@ -80,6 +80,9 @@ export const deletePost = async (postId) => {
 };
 
 export const updatePost = async (postId, title, description) => {
+  const [savedPostInfo] = await getPostById(postId);
+  const updateTitle = title || savedPostInfo.title;
+  const updateDescription = description || savedPostInfo.description;
   const result = await appDataSource.query(
     `
     UPDATE
@@ -90,7 +93,21 @@ export const updatePost = async (postId, title, description) => {
     WHERE
       id=?
     `,
-    [title, description, postId]
+    [updateTitle, updateDescription, postId]
   );
   return result;
+};
+
+const getPostById = async (postId) => {
+  return await appDataSource.query(
+    `
+    SELECT
+      title,description
+    FROM
+      posts
+    WHERE
+      id=?
+    `,
+    [postId]
+  );
 };

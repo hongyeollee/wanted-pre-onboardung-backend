@@ -9,7 +9,7 @@ export const checkExistUserByEmail = async (email) => {
       FROM
         users
       WHERE
-        id=?
+        email=?
     ) AS emailRegisted`,
     [email]
   );
